@@ -3,7 +3,7 @@
 @section('content')
     <div>
         <h2> Register New User </h2>
-        <form method="POST" action="{{ route('user.store') }}">
+        <form method="POST" action="{{ route('admin.store') }}">
             @csrf
 
             First Name: <input name="firstname" id="firstname" type="text" /> <br /> <br />

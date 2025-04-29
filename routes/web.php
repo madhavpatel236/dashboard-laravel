@@ -20,7 +20,7 @@ Route::post('/login/check', [AuthController::class, 'authentication'])->name('lo
 
 Route::post('/', [AuthController::class, 'logoutUser'])->name('logout_route');
 Route::resource('/userHome', UserController::class);
-Route::resource('/user', AdminController::class);
+Route::resource('/admin', AdminController::class);
 
 // Route::post('/delete_user' )->name('delete_user_route');
 

@@ -71,7 +71,7 @@ class AdminController extends Controller
         ]);
 
         UserModel::create($request->all());
-        return redirect('/user');
+        return redirect('/admin');
     }
 
     /**
@@ -109,7 +109,7 @@ class AdminController extends Controller
         // echo "<pre>";
         // var_dump($data->update());
         // exit;
-        return redirect('/user');
+        return redirect('/admin');
     }
 
     /**
@@ -119,6 +119,6 @@ class AdminController extends Controller
     {
         $user = UserModel::findOrFail($id);
         $user->delete();
-        return redirect('/user');
+        return redirect('/admin');
     }
 }

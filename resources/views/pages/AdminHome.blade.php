@@ -13,7 +13,7 @@
 
     <br />
 
-    <a href="{{ route('user.create') }}"> Register New User </a> <br /><br />
+    <a href="{{ route('admin.create') }}"> Register New User </a> <br /><br />
 
     <table border="1">
         <thead>
@@ -32,12 +32,12 @@
                     <td>{{ $eachUser['Email'] }}</td>
                     <td>{{ $eachUser['Role'] }}</td>
                     <td>
-                        <a href="{{ route('user.edit', $eachUser->id) }}"> Edit </a>
+                        <a href="{{ route('admin.edit', $eachUser->id) }}"> Edit </a>
                         {{-- <form action="{{ route('user.edit', $eachUser->id) }}" >
                             @csrf
                             <button>Edit</button>
                         </form> --}}
-                        <form action="{{ route('user.destroy', $eachUser->id) }}" method="POST">
+                        <form action="{{ route('admin.destroy', $eachUser->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button>Delete</button>
