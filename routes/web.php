@@ -13,8 +13,13 @@ Route::get('/login', function () {
 });
 
 Route::post('/login/check', [AuthController::class, 'authentication'])->name('loginAuth');
-Route::get('/adminHome', [AdminController::class, 'index'] )->name('adminHome_route');
-Route::get('/userHome', [UserController::class, 'index'] )->name('userHome_route');
-Route::get('/test', function(){
-    return view('templates.home_template');
-});
+Route::get('/adminHome', [AdminController::class, 'index'])->name('adminHome_route');
+Route::get('/userHome', [UserController::class, 'index'])->name('userHome_route');
+
+Route::resource('/user', AdminController::class);
+// Route::post('/delete_user' )->name('delete_user_route');
+
+
+// Route::get('/test', function(){
+//     return view('templates.home_template');
+// });

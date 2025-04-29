@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\UserModel as UserModel;
+
 
 class AdminController extends Controller
 {
@@ -11,7 +13,8 @@ class AdminController extends Controller
      */
     public function index()
     {
-       return view('pages.AdminHome');
+        $users = UserModel::all();
+        return view('pages.AdminHome', compact('users'));
     }
 
     /**
@@ -43,7 +46,9 @@ class AdminController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = UserModel::findOrFail($id);
+        return view('pages.UserEdit', compact('user'));
+        // echo "<pre>";var_dump($user['Email']); exit;
     }
 
     /**
@@ -51,7 +56,19 @@ class AdminController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'email' => 'required',
+            'role' => 'required',
+        ]);
+
+        $data = UserModel::findOrFail($id);
+        $data->update($request->only(['firstname', 'lastname', 'email', 'role']));
+        // echo "<pre>";
+        // var_dump($data->update());
+        // exit;
+        return redirect('/user');
     }
 
     /**
