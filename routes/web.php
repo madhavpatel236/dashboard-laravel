@@ -16,6 +16,9 @@ Route::post('/login/check', [AuthController::class, 'authentication'])->name('lo
 Route::get('/adminHome', [AdminController::class, 'index'])->name('adminHome_route');
 // Route::post('/userHome', [UserController::class, 'show'])->name('userHome_route');
 
+// Route::resource('/', AuthController::class);
+
+Route::post('/', [AuthController::class, 'logoutUser'])->name('logout_route');
 Route::resource('/userHome', UserController::class);
 Route::resource('/user', AdminController::class);
 

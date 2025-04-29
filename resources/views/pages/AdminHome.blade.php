@@ -6,8 +6,9 @@
 
 @section('content')
     {{-- <h2> Admin </h2> --}} <br />
-    <form method="post" action="" >
-        <button> Logout </button>
+    <form method="post" action="{{ route('logout_route') }}" >
+        @csrf
+        <button name="logout_btn" id="logout_btn" class="logout_btn"> Logout </button>
     </form>
 
     <br />
@@ -19,6 +20,7 @@
             <th>First Name</th>
             <th>Last Name</th>
             <th>Email</th>
+            <th>Role</th>
             <th></th>
         </thead>
         <tbody>
@@ -28,6 +30,7 @@
                     <td>{{ $eachUser['firstName'] }}</td>
                     <td>{{ $eachUser['lastName'] }}</td>
                     <td>{{ $eachUser['Email'] }}</td>
+                    <td>{{ $eachUser['Role'] }}</td>
                     <td>
                         <a href="{{ route('user.edit', $eachUser->id) }}"> Edit </a>
                         {{-- <form action="{{ route('user.edit', $eachUser->id) }}" >
