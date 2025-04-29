@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\UserModel;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -32,7 +33,10 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $user = UserModel::findOrFail($id);
+        // $userData =$user[''];
+        // echo "<pre>"; var_dump($userData); exit;
+        return view('pages.UserHome', compact('user'));
     }
 
     /**

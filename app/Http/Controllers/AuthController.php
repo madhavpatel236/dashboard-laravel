@@ -14,16 +14,15 @@ class AuthController extends Controller
             'password' => 'required'
         ]);
 
+        // echo "<pre>";var_dump($user[0]['Role']); exit;
         $email = $request->only('email');
         $user = UserModel::where('Email', $email)->get();
-        // var_dump($email); exit;
-        // var_dump($user[0]['Role']); exit;
         if ($user[0]['Role'] == 'admin') {
             return redirect()->route('adminHome_route');
         } elseif ($user[0]['Role'] == 'user') {
-            return redirect()->route('userHome_route');
+            // return redirect()->route('userHome.show', $email);
+            return redirect()->route('userHome.show', $user[0]->id);
         }
-        // echo "<pre>";var_du  mp($user[0]['Role']); exit;
 
     }
 }

@@ -5,8 +5,14 @@
 @extends('templates.home_template')
 
 @section('content')
-    {{-- <h2> Admin </h2> --}}<br/>
-    <a href="{{ route('user.create') }}" > Register New User </a> <br/><br/>
+    {{-- <h2> Admin </h2> --}} <br />
+    <form method="post" action="" >
+        <button> Logout </button>
+    </form>
+
+    <br />
+
+    <a href="{{ route('user.create') }}"> Register New User </a> <br /><br />
 
     <table border="1">
         <thead>
