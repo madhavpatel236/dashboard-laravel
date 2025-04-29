@@ -14,15 +14,10 @@ class AdminController extends Controller
     {
         $this->isCurrentUserEmail = $request->session()->get('currentUserEmail');
         $this->isCurrentUserRole = $request->session()->get('currentUserRole');
-        // $isCurrentUserEmail = session(['isCurrentUserEmail']);
-        // $isCurrentUserRole  = session(['currentUserRole']);
-        // var_dump(is_null($isCurrentUserEmail) && is_null($isCurrentUserRole));
-        // var_dump(($isCurrentUserEmail));
-        if (is_null($this->isCurrentUserEmail) && is_null($this->isCurrentUserRole)) {
-            // var_dump('dfv');
-            // return view('pages.Login');
-            return redirect('/login');
-        }
+        // if (is_null($this->isCurrentUserEmail) && is_null($this->isCurrentUserRole)) {
+        //     var_dump('dfv');
+        //     return redirect('/login');
+        // }
     }
 
     /**
@@ -30,10 +25,10 @@ class AdminController extends Controller
      */
     public function index()
     {
-        // if (is_null($this->isCurrentUserEmail) && is_null($this->isCurrentUserRole)) {
-        //     // var_dump('dfv');
-        //     return redirect('/login');
-        // }
+        if (is_null($this->isCurrentUserEmail) && is_null($this->isCurrentUserRole)) {
+            // var_dump('dfv');
+            return redirect('/login');
+        }
 
         $allUsers = UserModel::all();
         // echo "<pre>";var_dump($users[0]['Role']); exit;
@@ -43,9 +38,6 @@ class AdminController extends Controller
                 $users[] = $user;
             }
         }
-
-
-
         return view('pages.AdminHome', compact('users'));
     }
 
@@ -54,6 +46,10 @@ class AdminController extends Controller
      */
     public function create()
     {
+        if (is_null($this->isCurrentUserEmail) && is_null($this->isCurrentUserRole)) {
+            // var_dump('dfv');
+            return redirect('/login');
+        }
         return view('pages.Register');
     }
 
@@ -87,6 +83,10 @@ class AdminController extends Controller
      */
     public function edit(string $id)
     {
+        if (is_null($this->isCurrentUserEmail) && is_null($this->isCurrentUserRole)) {
+            // var_dump('dfv');
+            return redirect('/login');
+        }
         $user = UserModel::findOrFail($id);
         return view('pages.UserEdit', compact('user'));
         // echo "<pre>";var_dump($user['Email']); exit;
