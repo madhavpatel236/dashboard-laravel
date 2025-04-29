@@ -1,12 +1,10 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-// Route::redirect('/', '/login');
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 
 Route::redirect('/', '/login');
 
@@ -15,3 +13,8 @@ Route::get('/login', function () {
 });
 
 Route::post('/login/check', [AuthController::class, 'authentication'])->name('loginAuth');
+Route::get('/adminHome', [AdminController::class, 'index'] )->name('adminHome_route');
+Route::get('/userHome', [UserController::class, 'index'] )->name('userHome_route');
+Route::get('/test', function(){
+    return view('templates.home_template');
+});

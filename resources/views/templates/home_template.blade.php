@@ -1,3 +1,5 @@
-<div>
-    <!-- The biggest battle is the war against ignorance. - Mustafa Kemal Atatürk -->
-</div>
+@include ('components.Header')
+
+@yield('content')
+
+@include('components.Footer')

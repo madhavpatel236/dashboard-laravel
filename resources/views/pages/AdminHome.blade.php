@@ -1,3 +1,10 @@
-<div>
-    <!-- It is quality rather than quantity that matters. - Lucius Annaeus Seneca -->
-</div>
+{{-- <div> --}}
+{{-- Admin --}}
+{{-- </div> --}}
+
+@extends('templates.home_template')
+
+@section('content')
+
+
+@endsection
