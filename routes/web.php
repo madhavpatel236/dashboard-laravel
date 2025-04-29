@@ -13,7 +13,7 @@ Route::get('/login', function () {
 })->name('loginPage_route');
 
 Route::post('/login/check', [AuthController::class, 'authentication'])->name('loginAuth');
-Route::get('/adminHome', [AdminController::class, 'index'])->name('adminHome_route');
+// Route::get('/adminHome', [AdminController::class, 'index'])->name('adminHome_route');
 // Route::post('/userHome', [UserController::class, 'show'])->name('userHome_route');
 
 // Route::resource('/', AuthController::class);

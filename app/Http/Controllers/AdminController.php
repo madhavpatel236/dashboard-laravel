@@ -7,20 +7,22 @@ use App\Models\UserModel as UserModel;
 
 class AdminController extends Controller
 {
+    public $isCurrentUserEmail;
+    public $isCurrentUserRole;
 
     public function __construct(Request $request)
     {
-        // $isCurrentUserEmail = $request->session()->get('currentUserEmail');
-        // $isCurrentUserRole = $request->session()->get('currentUserRole');
+        $this->isCurrentUserEmail = $request->session()->get('currentUserEmail');
+        $this->isCurrentUserRole = $request->session()->get('currentUserRole');
         // $isCurrentUserEmail = session(['isCurrentUserEmail']);
         // $isCurrentUserRole  = session(['currentUserRole']);
         // var_dump(is_null($isCurrentUserEmail) && is_null($isCurrentUserRole));
         // var_dump(($isCurrentUserEmail));
-        // if (is_null($isCurrentUserEmail) && is_null($isCurrentUserRole)) {
-        //     var_dump('dfv');
-        // return view('pages.Login');
-        // return redirect('/login');
-        // }
+        if (is_null($this->isCurrentUserEmail) && is_null($this->isCurrentUserRole)) {
+            // var_dump('dfv');
+            // return view('pages.Login');
+            return redirect('/login');
+        }
     }
 
     /**
@@ -28,6 +30,11 @@ class AdminController extends Controller
      */
     public function index()
     {
+        // if (is_null($this->isCurrentUserEmail) && is_null($this->isCurrentUserRole)) {
+        //     // var_dump('dfv');
+        //     return redirect('/login');
+        // }
+
         $allUsers = UserModel::all();
         // echo "<pre>";var_dump($users[0]['Role']); exit;
         $users = [];
@@ -36,6 +43,9 @@ class AdminController extends Controller
                 $users[] = $user;
             }
         }
+
+
+
         return view('pages.AdminHome', compact('users'));
     }
 
