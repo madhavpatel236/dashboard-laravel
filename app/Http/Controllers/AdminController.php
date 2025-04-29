@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\UserModel as UserModel;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -58,6 +59,14 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
+        // $password = $request->all()['password'];
+        $password = $request->input('password');
+        $hashed = Hash::make($password, [
+            'rounds' => 12,
+        ]);
+        // var_dump($hashed);
+        // exit;
+
         $request->validate([
             'firstname',
             'lastname',
@@ -66,7 +75,16 @@ class AdminController extends Controller
             'role',
         ]);
 
-        UserModel::create($request->all());
+        $userModel = new UserModel();
+        $userModel->fill([
+            'firstname' => $request->firstname,
+            'lastname' => $request->lastname,
+            'email'  => $request->email,
+            'password'  => $hashed,
+            'role'  => $request->role,
+        ]);
+        $userModel->save();
+
         return redirect('/admin');
     }
 
@@ -87,6 +105,7 @@ class AdminController extends Controller
             // var_dump('dfv');
             return redirect('/login');
         }
+
         $user = UserModel::findOrFail($id);
         return view('pages.UserEdit', compact('user'));
         // echo "<pre>";var_dump($user['Email']); exit;
