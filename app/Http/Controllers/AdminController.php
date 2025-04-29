@@ -68,11 +68,11 @@ class AdminController extends Controller
         // exit;
 
         $request->validate([
-            'firstname',
-            'lastname',
-            'email',
-            'password',
-            'role',
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'email' => 'required|unique:auth',
+            'password' => 'required',
+            'role' => 'required',
         ]);
 
         $userModel = new UserModel();

@@ -3,3 +3,5 @@
 @yield('content')
 
 @include('components.Footer')
+
+

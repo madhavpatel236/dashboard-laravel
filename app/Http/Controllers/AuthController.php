@@ -17,14 +17,11 @@ class AuthController extends Controller
             'password' => 'required'
         ]);
 
-
         $email = $request->only('email');
-
         $user = UserModel::where('Email', $email)->get();
 
         if (Hash::check($request->input('password'), $user[0]['Password'])) {
             // var_dump('correct'); exit;
-
             if (isset($user) && $user[0]['Role'] == 'admin') {
                 $request->session()->put('currentUserEmail',  $email['email']);
                 $request->session()->put('currentUserRole',  $user[0]['Role']);
