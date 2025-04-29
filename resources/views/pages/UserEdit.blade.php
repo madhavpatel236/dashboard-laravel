@@ -4,7 +4,7 @@
     <div>
         {{-- {{ $user['id'] }} --}}
         <h2> Edit User </h2>
-        <form method="POST" action="{{ route('user.update', $user->id) }} ">
+        <form method="POST" action="{{ route('user.update', $user->id }} ">
             @csrf
             @method('PUT')
 

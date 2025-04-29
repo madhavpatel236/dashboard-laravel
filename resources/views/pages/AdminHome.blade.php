@@ -5,7 +5,8 @@
 @extends('templates.home_template')
 
 @section('content')
-    {{-- <h2> Admin </h2> --}}
+    {{-- <h2> Admin </h2> --}}<br/>
+    <a href="{{ route('user.create') }}" > Register New User </a> <br/><br/>
 
     <table border="1">
         <thead>
@@ -22,10 +23,11 @@
                     <td>{{ $eachUser['lastName'] }}</td>
                     <td>{{ $eachUser['Email'] }}</td>
                     <td>
-                        <form action="{{ route('user.edit', $eachUser->id) }}" >
+                        <a href="{{ route('user.edit', $eachUser->id) }}"> Edit </a>
+                        {{-- <form action="{{ route('user.edit', $eachUser->id) }}" >
                             @csrf
                             <button>Edit</button>
-                        </form>
+                        </form> --}}
                         <form action="{{ route('user.destroy', $eachUser->id) }}" method="POST">
                             @csrf
                             @method('DELETE')

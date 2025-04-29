@@ -22,7 +22,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.Register');
     }
 
     /**
@@ -30,7 +30,16 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'firstname',
+            'lastname',
+            'email',
+            'password',
+            'role',
+        ]);
+
+        UserModel::create($request->all());
+        return redirect('/user');
     }
 
     /**
@@ -76,6 +85,8 @@ class AdminController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = UserModel::findOrFail($id);
+        $user->delete();
+        return redirect('/user');
     }
 }
