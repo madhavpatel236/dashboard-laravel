@@ -5,15 +5,37 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\UserModel as UserModel;
 
-
 class AdminController extends Controller
 {
+
+    public function __construct(Request $request)
+    {
+        // $isCurrentUserEmail = $request->session()->get('currentUserEmail');
+        // $isCurrentUserRole = $request->session()->get('currentUserRole');
+        // $isCurrentUserEmail = session(['isCurrentUserEmail']);
+        // $isCurrentUserRole  = session(['currentUserRole']);
+        // var_dump(is_null($isCurrentUserEmail) && is_null($isCurrentUserRole));
+        // var_dump(($isCurrentUserEmail));
+        // if (is_null($isCurrentUserEmail) && is_null($isCurrentUserRole)) {
+        //     var_dump('dfv');
+        // return view('pages.Login');
+        // return redirect('/login');
+        // }
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $users = UserModel::all();
+        $allUsers = UserModel::all();
+        // echo "<pre>";var_dump($users[0]['Role']); exit;
+        $users = [];
+        foreach ($allUsers as $user) {
+            if ($user['Role'] != 'admin') {
+                $users[] = $user;
+            }
+        }
         return view('pages.AdminHome', compact('users'));
     }
 

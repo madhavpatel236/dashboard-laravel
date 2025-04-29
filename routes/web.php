@@ -10,7 +10,7 @@ Route::redirect('/', '/login');
 
 Route::get('/login', function () {
     return view('pages.Login');
-});
+})->name('loginPage_route');
 
 Route::post('/login/check', [AuthController::class, 'authentication'])->name('loginAuth');
 Route::get('/adminHome', [AdminController::class, 'index'])->name('adminHome_route');

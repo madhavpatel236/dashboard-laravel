@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
+
+
     public function authentication(Request $request)
     {
         $request->validate([
@@ -31,12 +33,12 @@ class AuthController extends Controller
         }
     }
 
-    public function logoutUser(Request $request){
+    public function logoutUser(Request $request)
+    {
         $request->session()->forget('currentUserEmail');
         $request->session()->forget('currentUserRole');
         // $request->session()->flush();
         // var_dump($request->session()->get('currentUserRole')); exit;
         return view('pages.Login');
-
     }
 }
