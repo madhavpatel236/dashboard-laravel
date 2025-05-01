@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\authMiddleware;
 use Illuminate\Support\Facades\Route;
 
 
@@ -10,9 +11,9 @@ Route::redirect('/', '/login');
 
 Route::get('/login', function () {
     return view('pages.Login');
-})->name('loginPage_route');
+})->name('loginPage_route')->middleware(authMiddleware::class);
 
-Route::post('/login/check', [AuthController::class, 'authentication'])->name('loginAuth');
+Route::post('/login/check', [AuthController::class, 'authentication'])->name('loginAuth')->middleware(authMiddleware::class);
 // Route::get('/adminHome', [AdminController::class, 'index'])->name('adminHome_route');
 // Route::post('/userHome', [UserController::class, 'show'])->name('userHome_route');
 
