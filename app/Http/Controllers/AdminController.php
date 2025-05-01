@@ -71,7 +71,16 @@ class AdminController extends Controller
             'firstname' => 'required',
             'lastname' => 'required',
             'email' => 'required|unique:auth',
-            'password' => 'required',
+            'password' => [
+                'required',
+                'string',
+                'min:6',
+                'max:10',
+                'regex:/[a-z]/',
+                'regex:/[A-Z]/',
+                'regex:/[0-9]/',
+                'regex:/[@$!%*#?&]/'
+            ],
             'role' => 'required',
         ]);
 

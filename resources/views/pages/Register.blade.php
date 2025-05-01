@@ -24,7 +24,7 @@
 
 
 
-            Email Name: <input name="email" id="email" type="email" />
+            Email : <input class="email" name="email" id="email" type="email" />
             <span class="email_error"> </span>
             @error('email')
                 <span class="email_error"> {{ $message }} </span>
@@ -103,9 +103,16 @@
             }
         });
 
-        $.ajax({
-            type: "GET",
-            url: "",
-        })
+
+        $("#email").on("input", function() {
+            // $.ajax({
+            //     type: "POST",
+
+            //     success: function(res){
+            //         alert(res);
+            //     }
+            // })
+        });
+
     });
 </script>

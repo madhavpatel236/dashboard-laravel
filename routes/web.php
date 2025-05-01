@@ -22,6 +22,7 @@ Route::post('/login/check', [AuthController::class, 'authentication'])->name('lo
 Route::post('/', [AuthController::class, 'logoutUser'])->name('logout_route');
 Route::resource('/userHome', UserController::class);
 Route::resource('/admin', AdminController::class);
+// Route::get('newEmailCheck', [UserController::class, 'check'])->name('register_email_auth');
 
 // Route::post('/delete_user' )->name('delete_user_route');
 

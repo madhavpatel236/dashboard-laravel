@@ -85,4 +85,12 @@ class UserController extends Controller
     {
         //
     }
+    // public function check(Request $request)
+    // {
+    //     $email = $request->post('email');
+    //     $val =$request->all();
+    //     var_dump($val); exit;
+    //     $isEmailPresent = UserModel::findOrFail($email);
+    //     var_dump($isEmailPresent); exit;
+    // }
 }
