@@ -4,4 +4,4 @@
 
 @include('components.Footer')
 
-
+@stack('scripts')

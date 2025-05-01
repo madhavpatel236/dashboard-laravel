@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\UserModel as UserModel;
 use Illuminate\Support\Facades\Hash;
+use PhpParser\Node\Expr\Isset_;
 
 class AdminController extends Controller
 {
     public $isCurrentUserEmail;
     public $isCurrentUserRole;
-
     public function __construct(Request $request)
     {
         $this->isCurrentUserEmail = $request->session()->get('currentUserEmail');
         $this->isCurrentUserRole = $request->session()->get('currentUserRole');
         // if (is_null($this->isCurrentUserEmail) && is_null($this->isCurrentUserRole)) {
-        //     var_dump('dfv');
+        // var_dump('dfv');
         //     return redirect('/login');
         // }
     }
@@ -93,16 +94,20 @@ class AdminController extends Controller
             'role'  => $request->role,
         ]);
         $userModel->save();
-
         return redirect('/admin');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function check(UserModel $user_model, Request $request)
     {
-        //
+        $email = $request->input('email');
+        var_dump('dfvb');
+        exit;
+        // $users = $users->intersect(User::whereIn('id', [1, 2, 3])->get());
+        // $data = UserModel::findOrFail($email);
+        // $res = UserModel::findOrFail($email);
     }
 
     /**

@@ -34,6 +34,7 @@
 
 
             Password: <input name="password" id="password" type="password" />
+            <span onclick="togglePassword()" style="cursor: pointer" class="eye_btn"> 👀 </span>
             <span class="password_error"> </span>
             @error('password')
                 <span class="password_error"> {{ $message }} </span>
@@ -57,29 +58,22 @@
 @endsection
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
 <script>
-    // console.log("object");
-
-
-    $(document).ready(function() {
-
-        function emailValidation() {
-            var email = $("#email").val();
-            if (!email) {
-                $(".email_error").html("Please enter the email");
-                isValidate = false;
-            }
-        }
-
-        $("#email").on("input", emailValidation);
-
+    function togglePassword() {
+        var passwordField = document.getElementById("password");
+        passwordField.type = passwordField.type === "password" ? "text" : "password";
+    }
+    $(document).ready(function(e) {
         $(".register_form").on("submit", function(e) {
-            var isValidate = true;
+            // alert('sdv');
+
             var firstname = $("#firstname").val();
             var lastname = $("#lastname").val();
-            // var email = $("#email").val();
+            var email = $("#email").val();
             var password = $("#password").val();
             var role = $("#role").val();
+            var isValidate = true;
 
             if (!firstname) {
                 $(".firstname_error").html("Please enter the first name");
@@ -89,10 +83,10 @@
                 $(".lastname_error").html("Please enter the last name");
                 isValidate = false;
             }
-            // if (!email) {
-            //     $(".email_error").html("Please enter the email");
-            //     isValidate = false;
-            // }
+            if (!email) {
+                $(".email_error").html("Please enter the email");
+                isValidate = false;
+            }
             if (!password) {
                 $(".password_error").html("Please enter the password");
                 isValidate = false;
@@ -103,16 +97,92 @@
             }
         });
 
-
-        $("#email").on("input", function() {
+        $('#email').on('input', function() {
+            var email = $('#email').val();
+            // alert(email);
             // $.ajax({
-            //     type: "POST",
-
-            //     success: function(res){
-            //         alert(res);
+            //     url: '/check',
+            //     type: 'post',
+            //     data: {
+            //         email: email,
+            //     },
+            //     success: function(response) {
+            //         alert(response);
+            //     },
+            //     error: function(xhr, message, error) {
+            //         alert('error; ' + error);
             //     }
             // })
-        });
+
+            $.ajax({
+                url: '/check',
+                type: 'get',
+                data: {
+                    // method: 'check',
+                    email: email,
+                },
+                success: function(response) {
+                    alert(response);
+                },
+                error: function(xhr, message, error) {
+                    alert('error; ' + error);
+                }
+            })
+
+
+        })
+
+    })
+</script>
+
+{{-- <script>
+    $(document).ready(function() {
+
+        // $(".register_form").on("submit", function(e) {
+        //     alert('sdv');
+
+        //     var firstname = $("#firstname").val();
+        //     var lastname = $("#lastname").val();
+        //     var email = $("#email").val();
+        //     var password = $("#password").val();
+        //     var role = $("#role").val();
+        //     var isValidate = true;
+
+        //     if (!firstname) {
+        //         $(".firstname_error").html("Please enter the first name");
+        //         isValidate = false;
+        //     }
+        //     if (!lastname) {
+        //         $(".lastname_error").html("Please enter the last name");
+        //         isValidate = false;
+        //     }
+        //     if (!email) {
+        //         $(".email_error").html("Please enter the email");
+        //         isValidate = false;
+        //     }
+        //     if (!password) {
+        //         $(".password_error").html("Please enter the password");
+        //         isValidate = false;
+        //     }
+
+        //     if (!isValidate) {
+        //         e.preventDefault();
+        //     }
+        // });
+
+        // function emailValidation() {
+        //     var email = $("#email").val();
+        //     if (!email) {
+        //         $(".email_error").html("Please enter the email");
+        //         isValidate = false;
+        //     }
+        // }
+        // $("#email").on("input", emailValidation);
+
+
+
+
+
 
     });
-</script>
+</script> --}}

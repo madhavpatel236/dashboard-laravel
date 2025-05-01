@@ -14,9 +14,18 @@
             <span>{{ $errors->first('email') }}</span>
         @endif --}}
         <br /> <br />
+        {{--
+        <div>
+            <div class="password-container" style="position: relative;">
+                <input type="password" class="input" id="password" name="password" />
+                <span class="toggle-eye" onclick="togglePassword()"
+                    style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;">👁️</span>
+            </div>
+        </div> --}}
+
 
         Password: <input type="password" name="password" id="password" class="password-section" />
-        <span style="cursor: pointer" class="eye_btn"> 👀 </span>
+        <span onclick="togglePassword()" style="cursor: pointer" class="eye_btn"> 👀 </span>
         <span class="password_error"> </span>
         @error('password')
             <span class="password_error"> {{ $message }} </span>
@@ -34,7 +43,7 @@
             }
         @endphp
 
-        <br /> <br/>
+        <br /> <br />
         {{-- @php
         <span class="email_error"> </span>
         $error = $request->session->get('credential_error');
@@ -46,9 +55,13 @@
 
 </div>
 
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
+    function togglePassword() {
+        // alert('sdfvdfv');
+        var passwordField = document.getElementById("password");
+        passwordField.type = passwordField.type === "password" ? "text" : "password";
+    }
     // console.log("object");
     $(document).ready(function() {
 

@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\authMiddleware;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Route;
 
 
@@ -22,7 +23,12 @@ Route::post('/login/check', [AuthController::class, 'authentication'])->name('lo
 Route::post('/', [AuthController::class, 'logoutUser'])->name('logout_route');
 Route::resource('/userHome', UserController::class);
 Route::resource('/admin', AdminController::class);
-// Route::get('newEmailCheck', [UserController::class, 'check'])->name('register_email_auth');
+// Route::post('/check', [AdminController::class, 'check']);
+// Route::post('/check', function (AdminController $admin) {
+//     $admin->check();
+// });
+Route::post('/check', 'AdminController@check');
+Route::get('/check', [AdminController::class, 'check']);
 
 // Route::post('/delete_user' )->name('delete_user_route');
 
