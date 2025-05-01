@@ -39,10 +39,11 @@
                             @csrf
                             <button>Edit</button>
                         </form> --}}
-                <form action="{{ route('admin.destroy', $eachUser->id) }}" method="POST">
+                <form onsubmit="return confirm('Sure are you want to delete the user?')"
+                    action="{{ route('admin.destroy', $eachUser->id) }}" method="POST">
                     @csrf
                     @method('DELETE')
-                    <button>Delete</button>
+                    <button onclick="">Delete</button>
                 </form>
             </td>
         </tr>
@@ -50,7 +51,7 @@
         <div> No user is present in the db </div>
     @endforelse
     </tbody>
-    </table> <br/>
+    </table> <br />
 
     {{-- {{ $users }} --}}
 @endsection

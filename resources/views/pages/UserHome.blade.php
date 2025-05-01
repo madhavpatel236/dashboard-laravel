@@ -14,5 +14,5 @@
         <strong> Email: </strong> {{ $user->Email }} <br />
         <strong> Role: </strong> {{ $user->Role }} <br />
     </div>
-    <br/>
+    <br />
 @endsection
