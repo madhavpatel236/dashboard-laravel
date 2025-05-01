@@ -9,11 +9,11 @@
         {{-- @error('email')
             <span class="email_error"> {{ $message }} </span>
         @enderror --}}
-{{--
+        {{--
         @if ($errors->has('email'))
             <span>{{ $errors->first('email') }}</span>
-        @endif
-        <br /> <br /> --}}
+        @endif --}}
+        <br /> <br />
 
         Password: <input name="password" id="password" type="password" />
         <span class="password_error"> </span>

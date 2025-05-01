@@ -9,8 +9,6 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-
-
     public function authentication(Request $request, FormValidationRequest $req)
     {
         // var_dump($validator = $req->validated());
@@ -44,8 +42,8 @@ class AuthController extends Controller
     {
         $request->session()->forget('currentUserEmail');
         $request->session()->forget('currentUserRole');
-        // $request->session()->flush();
         // var_dump($request->session()->get('currentUserRole')); exit;
-        return view('pages.Login');
+        // return view('pages.Login');
+        return redirect('/login');
     }
 }
