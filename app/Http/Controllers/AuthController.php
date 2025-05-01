@@ -18,7 +18,7 @@ class AuthController extends Controller
         $this->isCurrentUserEmail = $request->session()->get('currentUserEmail');
         $this->isCurrentUserRole = $request->session()->get('currentUserRole');
 
-
+        session(['credenetial_error' => null]);
         if ($this->isCurrentUserRole == 'admin') {
             // var_dump($this->isCurrentUserRole); exit;
             return redirect('/admin');
@@ -34,32 +34,43 @@ class AuthController extends Controller
         //     'email' => 'required',
         //     'password' => 'required'
         // ]);
+        // $request->session->put('credential_error', null);
 
         $email = $request->only('email');
         $user = UserModel::where('Email', $email)->get();
 
-
-        if (Hash::check($request->input('password'), $user[0]['Password'])) {
+        // echo "<pre>";var_dump(count($user)); exit;
+        if (count($user) != 0 && Hash::check($request->input('password'), $user[0]['Password'])) {
             // var_dump('correct'); exit;
             if (isset($user) && $user[0]['Role'] == 'admin') {
                 // session(['currentUserEmail' => $email['email']]);
                 // session(['currentUserRole' => $user[0]['Role']]);
                 $request->session()->put('currentUserEmail',  $email['email']);
                 $request->session()->put('currentUserRole',  $user[0]['Role']);
+                // $request->session->put('credential_error', null);
+                session(['credential_error' => null]);
+
                 return redirect()->route('admin.index');
             } elseif (isset($user) && $user[0]['Role'] == 'user') {
                 $request->session()->put('currentUserEmail',  $email['email']);
                 $request->session()->put('currentUserRole',  $user[0]['Role']);
+                // $request->session->put('credential_error', null);
+                session(['credential_error' => null]);
                 $request->session()->put('userId', $user[0]->id);
 
-                return redirect()->route('userHome.show', $user[0]->id);
+                // return redirect()->route('userHome.show', $user[0]->id);
                 // return redirect()->route('userHome.show', $email);
             }
+        } else {
+            $cred_error = 'Invalid Credential!!';
+            session(['credenetial_error' => $cred_error]);
+            return redirect()->route('loginPage_route');
         }
     }
 
     public function logoutUser(Request $request)
     {
+        session(['credenetial_error' => null]);
         $request->session()->forget('currentUserEmail');
         $request->session()->forget('currentUserRole');
         // var_dump($request->session()->get('currentUserRole')); exit;

@@ -15,12 +15,31 @@
         @endif --}}
         <br /> <br />
 
-        Password: <input name="password" id="password" type="password" />
+        Password: <input type="password" name="password" id="password" class="password-section" />
+        <span style="cursor: pointer" class="eye_btn"> 👀 </span>
         <span class="password_error"> </span>
         @error('password')
             <span class="password_error"> {{ $message }} </span>
         @enderror
         <br /> <br />
+
+        {{-- {{ session('credenetial_error') }} --}}
+
+        {{-- {!! session(['credential_error' => null]) !!} --}}
+
+        @php
+            if (!is_null(session('credenetial_error'))) {
+                echo session('credenetial_error');
+                session(['credenetial_error' => null]);
+            }
+        @endphp
+
+        <br /> <br/>
+        {{-- @php
+        <span class="email_error"> </span>
+        $error = $request->session->get('credential_error');
+        @endphp --}}
+
 
         <button name="submit_btn" id="submit_btn"> Submit </button>
     </form>
@@ -32,6 +51,12 @@
 <script>
     // console.log("object");
     $(document).ready(function() {
+
+        // $('.eye_btn').on('click', function() {
+        //     var val = $('#password').val();
+        //     val.();
+        // })
+
         $(".login_form").on("submit", function(e) {
             var isValidate = true;
 
