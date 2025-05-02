@@ -114,20 +114,21 @@
             //     }
             // })
 
-            $.ajax({
-                url: '/check',
-                type: 'get',
-                data: {
-                    // method: 'check',
-                    email: email,
-                },
-                success: function(response) {
-                    alert(response);
-                },
-                error: function(xhr, message, error) {
-                    alert('error; ' + error);
-                }
-            })
+            // actual working one
+            // $.ajax({
+            //     url: '/check',
+            //     type: 'get',
+            //     data: {
+            //         // method: 'check',
+            //         email: email,
+            //     },
+            //     success: function(response) {
+            //         alert(response);
+            //     },
+            //     error: function(xhr, message, error) {
+            //         alert('error; ' + error);
+            //     }
+            // })
 
 
         })
