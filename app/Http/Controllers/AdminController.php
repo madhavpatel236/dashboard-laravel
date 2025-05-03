@@ -5,22 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\UserModel as UserModel;
+use Dotenv\Exception\ValidationException;
 use Illuminate\Support\Facades\Hash;
+use Mockery;
 use PhpParser\Node\Expr\Isset_;
 
 class AdminController extends Controller
 {
     public $isCurrentUserEmail;
     public $isCurrentUserRole;
+
     public function __construct(Request $request)
     {
-        $this->isCurrentUserEmail = $request->session()->get('currentUserEmail');
-        $this->isCurrentUserRole = $request->session()->get('currentUserRole');
-        // if (is_null($this->isCurrentUserEmail) && is_null($this->isCurrentUserRole)) {
-        // var_dump('dfv');
-        //     return redirect('/login');
-        // }
+        // $this->isCurrentUserEmail = $request->session()->get('currentUserEmail');
+        // $this->isCurrentUserRole = $request->session()->get('currentUserRole');
     }
+
 
     /**
      * Display a listing of the resource.
@@ -60,6 +60,9 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
+        // echo "<pre>";
+        // var_dump($request->all());
+        // exit;
         // $password = $request->all()['password'];
         $password = $request->input('password');
         $hashed = Hash::make($password, [
@@ -68,22 +71,28 @@ class AdminController extends Controller
         // var_dump($hashed);
         // exit;
 
-        $request->validate([
-            'firstname' => 'required',
-            'lastname' => 'required',
-            'email' => 'required|unique:auth',
-            'password' => [
-                'required',
-                'string',
-                'min:6',
-                'max:10',
-                'regex:/[a-z]/',
-                'regex:/[A-Z]/',
-                'regex:/[0-9]/',
-                'regex:/[@$!%*#?&]/'
-            ],
-            'role' => 'required',
-        ]);
+        try {
+            $request->validate([
+                'firstname' => 'required',
+                'lastname' => 'required',
+                'email' => 'required|unique:auth',
+                'password' => [
+                    'required',
+                    'string',
+                    'min:6',
+                    'max:10',
+                    'regex:/[a-z]/',
+                    'regex:/[A-Z]/',
+                    'regex:/[0-9]/',
+                    'regex:/[@$!%*#?&]/'
+                ],
+                'role' => 'required',
+            ]);
+        } catch (ValidationException $e) {
+            return back()->withErrors($e)->withInput();
+        }
+
+
 
         $userModel = new UserModel();
         $userModel->fill([
@@ -93,10 +102,9 @@ class AdminController extends Controller
             'password'  => $hashed,
             'role'  => $request->role,
         ]);
-        $userModel->save();
+        // $userModel->save();
         return redirect('/admin');
     }
-
     /**
      * Display the specified resource.
      */
@@ -110,9 +118,8 @@ class AdminController extends Controller
         // $res = UserModel::findOrFail($email);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+
+
     public function edit(string $id)
     {
         if (is_null($this->isCurrentUserEmail) && is_null($this->isCurrentUserRole)) {
@@ -125,9 +132,7 @@ class AdminController extends Controller
         // echo "<pre>";var_dump($user['Email']); exit;
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(Request $request, string $id)
     {
         $request->validate([
@@ -145,9 +150,7 @@ class AdminController extends Controller
         return redirect('/admin');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(string $id)
     {
         $user = UserModel::findOrFail($id);
