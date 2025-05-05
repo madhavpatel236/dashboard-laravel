@@ -17,8 +17,8 @@ class AdminController extends Controller
 
     public function __construct(Request $request)
     {
-        // $this->isCurrentUserEmail = $request->session()->get('currentUserEmail');
-        // $this->isCurrentUserRole = $request->session()->get('currentUserRole');
+        $this->isCurrentUserEmail = $request->session()->get('currentUserEmail');
+        $this->isCurrentUserRole = $request->session()->get('currentUserRole');
     }
 
 
@@ -92,8 +92,6 @@ class AdminController extends Controller
             return back()->withErrors($e)->withInput();
         }
 
-
-
         $userModel = new UserModel();
         $userModel->fill([
             'firstname' => $request->firstname,
@@ -105,6 +103,47 @@ class AdminController extends Controller
         // $userModel->save();
         return redirect('/admin');
     }
+
+    // ------------
+
+    // {
+    //     try {
+    //         $validated = $request->validate([
+    //             'firstname' => 'required',
+    //             'lastname' => 'required',
+    //             'email' => 'required|unique:users,email', // Use correct table name
+    //             'password' => [
+    //                 'required',
+    //                 'string',
+    //                 'min:6',
+    //                 'max:10',
+    //                 'regex:/[a-z]/',
+    //                 'regex:/[A-Z]/',
+    //                 'regex:/[0-9]/',
+    //                 'regex:/[@$!%*#?&]/'
+    //             ],
+    //             'role' => 'required',
+    //         ]);
+
+    //         $userModel = new UserModel();
+    //         $userModel->fill([
+    //             'firstname' => $validated['firstname'],
+    //             'lastname' => $validated['lastname'],
+    //             'email' => $validated['email'],
+    //             'password' => Hash::make($validated['password'], ['rounds' => 12]),
+    //             'role' => $validated['role'],
+    //         ]);
+    //         $userModel->save();
+
+    //         return redirect('/admin');
+    //     } catch (ValidationException $e) {
+    //         return back()->withErrors($e)->withInput();
+    //     }
+    // }
+
+    // ---------
+
+
     /**
      * Display the specified resource.
      */

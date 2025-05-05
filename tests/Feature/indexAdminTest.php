@@ -14,19 +14,19 @@ class indexAdminTest extends TestCase
     /**
      * A basic feature test example.
      */
-    public function test_example(): void
-    {
-        // $request = new Request();
+    // public function test_example(): void
+    // {
+    // $request = new Request();
 
-        // $indexMock = Mockery::mock(AdminController::class);
-        // $indexMock->shouldReceive('index')->once()->andReturn(true);
-        // $controller = new AdminController($request, $indexMock);
-        // $res = $controller->index();
-        // $data = [];
-        // $this->assertTrue($res);
+    // $indexMock = Mockery::mock(AdminController::class);
+    // $indexMock->shouldReceive('index')->once()->andReturn(true);
+    // $controller = new AdminController($request, $indexMock);
+    // $res = $controller->index();
+    // $data = [];
+    // $this->assertTrue($res);
 
 
-        $response = $this->get('/');
-        $response->assertStatus(302);
-    }
+    //     $response = $this->get('/');
+    //     $response->assertStatus(302);
+    // }
 }
