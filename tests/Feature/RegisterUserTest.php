@@ -65,41 +65,17 @@ class RegisterUserTest extends TestCase
         $this->mockRequest->shouldReceive('validate')->with($dummyData)->andReturn($dummyData);
         $this->mockRequest->shouldReceive('fill')->with($dummyData)->andReturn($dummyData);
 
-        // $controller = new AdminController($this->mockRequest);
-        // $storeRes = $controller->store($this->mockRequest);
-        $storeRes = $this->adminController->shouldReceive('store')->with($dummyData)->andReturn(true);
-        dump($storeRes);
-
-        // $response = $this->route::post('/admin/create/', $this->mockRequest);
+        $storeRes = $this->adminController->shouldReceive('store')->with($this->mockRequest)->andReturn(true);
+        $response = $this->post('/admin', $dummyData);
         // $response->assertStatus(200);
-        // $response->assertRedirect('/admin');
-
-
-
-        // dump($this->mockRequest->all());
-        // assertNotEmpty($storeRes);
-
-        // $response = $this->get('/admin/create');
-        // $response->assertStatus(200);
-
-
-
-        // $res = new adminController($this->mockRequest);
-        // $storeRes = $res->store($this->fakerMock);
-        // $this->assertIsReadable($storeRes);
-        // $this->assertIsReadable($this->mockRequest);
-        // $this->assertTrue($res);
-
-
-
-        // $this->assertIsReadable($response);
+        $response->assertRedirect('/admin');
     }
-    // protected function tearDown(): void
-    // {
-    //     Mockery::close();
+    protected function tearDown(): void
+    {
+        Mockery::close();
 
-    //     parent::tearDown();
-    // }
+        parent::tearDown();
+    }
 }
 
 
