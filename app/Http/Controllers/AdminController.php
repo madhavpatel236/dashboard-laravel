@@ -17,6 +17,7 @@ class AdminController extends Controller
 
     public function __construct(Request $request)
     {
+        // dump($request->session()->get('currentUserEmail));
         $this->isCurrentUserEmail = $request->session()->get('currentUserEmail');
         $this->isCurrentUserRole = $request->session()->get('currentUserRole');
     }
@@ -61,15 +62,15 @@ class AdminController extends Controller
     public function store(Request $request)
     {
         // echo "<pre>";
-        // var_dump($request->all());
+        // print_r($request->all());
         // exit;
         // $password = $request->all()['password'];
+        // dump($request);
+        // dump('dfvdf');
         $password = $request->input('password');
         $hashed = Hash::make($password, [
             'rounds' => 12,
         ]);
-        // var_dump($hashed);
-        // exit;
 
         try {
             $request->validate([
