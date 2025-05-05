@@ -65,8 +65,6 @@ class AdminController extends Controller
         // print_r($request->all());
         // exit;
         // $password = $request->all()['password'];
-        // dump($request);
-        // dump('dfvdf');
         $password = $request->input('password');
         $hashed = Hash::make($password, [
             'rounds' => 12,
@@ -81,7 +79,7 @@ class AdminController extends Controller
                     'required',
                     'string',
                     'min:6',
-                    // 'max:10',
+                    'max:10',
                     'regex:/[a-z]/',
                     'regex:/[A-Z]/',
                     'regex:/[0-9]/',
@@ -91,6 +89,7 @@ class AdminController extends Controller
             ]);
         } catch (ValidationException $e) {
             return back()->withErrors($e)->withInput();
+            
         }
 
         $userModel = new UserModel();
@@ -101,7 +100,7 @@ class AdminController extends Controller
             'password'  => $hashed,
             'role'  => $request->role,
         ]);
-        // $userModel->save();
+        $userModel->save();
         return redirect('/admin');
     }
 

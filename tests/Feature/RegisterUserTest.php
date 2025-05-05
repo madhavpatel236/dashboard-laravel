@@ -11,10 +11,6 @@ use Mockery;
 use Mockery\MockInterface;
 use Tests\TestCase;
 
-use function PHPUnit\Framework\assertIsCallable;
-use function PHPUnit\Framework\assertIsReadable;
-use function PHPUnit\Framework\assertNotEmpty;
-use function PHPUnit\Framework\assertTrue;
 
 class RegisterUserTest extends TestCase
 {
@@ -57,6 +53,7 @@ class RegisterUserTest extends TestCase
             'password' => $this->fakerMock->password(),
             'role' => 'user',
         ];
+
         $this->mockRequest->shouldReceive('isCurrentUserEmail')->with($dummySessionData['isCurrentUserEmail']);
         $this->mockRequest->shouldReceive('isCurrentUserRole')->with($dummySessionData['isCurrentUserRole']);
         // new $this->adminController($this->mockRequest);
@@ -65,12 +62,20 @@ class RegisterUserTest extends TestCase
         $this->mockRequest->shouldReceive('input')->with('password')->andReturn($dummyData['password']);
         $this->mockRequest->shouldReceive('validate')->with($dummyData)->andReturn($dummyData);
         $this->mockRequest->shouldReceive('fill')->with($dummyData)->andReturn($dummyData);
+        $storeRes = $this->adminController->shouldReceive('store')->with($this->mockRequest)->andReturn(true);
+
+        $response = $this->post('admin/', $dummyData);
+        $response->assertRedirect('admin/');
 
         dump($dummyData);
-        $storeRes = $this->adminController->shouldReceive('store')->with($this->mockRequest)->andReturn(true);
-        $response = $this->post('/admin', $dummyData);
+        $this->assertDatabaseHas('auth', [
+            'Email' => $dummyData['email'],
+        ]);
+
+
+        // dump($isEnter);
+        // dump($this->get('admin'));
         // $response->assertStatus(200);
-        // $response->assertRedirect('/admin');
     }
     protected function tearDown(): void
     {
