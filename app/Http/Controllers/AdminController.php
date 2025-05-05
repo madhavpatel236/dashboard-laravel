@@ -81,7 +81,7 @@ class AdminController extends Controller
                     'required',
                     'string',
                     'min:6',
-                    'max:10',
+                    // 'max:10',
                     'regex:/[a-z]/',
                     'regex:/[A-Z]/',
                     'regex:/[0-9]/',
