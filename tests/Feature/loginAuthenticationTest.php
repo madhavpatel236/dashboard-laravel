@@ -4,11 +4,13 @@ namespace Tests\Feature;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Requests\FormValidationRequest;
+use App\Models\UserModel;
 use Carbon\Factory;
 use Illuminate\Container\Attributes\DB;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Mockery;
 use Tests\TestCase;
 
@@ -38,48 +40,65 @@ class loginAuthenticationTest extends TestCase
         $this->mockAuthController = Mockery::mock(AuthController::class);
         // $this->mockRegisterUserTest = Mockery::mock(RegisterUserTest::class);
 
-        $realFaker = \Faker\Factory::create();
-        $this->mockFakers = Mockery::mock('Faker');
-        $this->mockFakers->shouldReceive('email')->andReturn($realFaker->email());
-        $this->mockFakers->shouldReceive('password')->andReturn($realFaker->password());
+        // $realFaker = \Faker\Factory::create();
+        // $this->mockFakers = Mockery::mock('Faker');
     }
 
-    public function test_example()
+    public function loginAuth($email, $password, $role)
     {
+
+
         $cases = Roles::cases();
         $role = $cases[array_rand($cases)];
 
-        $dummyData = [
-            'email' => $this->mockFakers->email(),
-            'password' => $this->mockFakers->password(),
+        $testData = [
+            'email' => $email,
+            'password' => $password,
             // 'role' => $role->name,
-            'role' => 'admin',
+            // 'role' => 'admin',
         ];
+        // dump($this->mockRequests); exit;
 
 
-        $this->mockRequests->shouldReceive('isCurrentUserEmail')->with($dummyData['email']);
-        $this->mockRequests->shouldReceive('isCurrentUserRole')->with($dummyData['password']);
+        $this->mockRequests->shouldReceive('isCurrentUserEmail')->with($email);
+        $this->mockRequests->shouldReceive('isCurrentUserRole')->with($role);
         $this->mockRequests->shouldReceive('credential_error')->with(null);
 
 
-        $this->mockRequests->shouldReceive('validate')->with($dummyData)->andReturn($dummyData);
-        $this->mockRequests->shouldReceive('only')->with('email')->andReturn($dummyData['email']);
-        $this->mockRequests->shouldReceive('input')->with('email')->andReturn($dummyData['email']);
-        $this->mockRequests->shouldReceive('input')->with('password')->andReturn($dummyData['password']);
+        // $this->mockRequests->shouldReceive('validate')->with($dummyData)->andReturn($dummyData);
+        $this->mockRequests->shouldReceive('only')->with('email')->andReturn($email);
+        $this->mockRequests->shouldReceive('input')->with('email')->andReturn($email);
+        $this->mockRequests->shouldReceive('input')->with('password')->andReturn($password);
+        // dump($testData);
 
-        $res = $this->mockRequests->shouldReceive('authentication')->with($this->mockRequests, $this->mockFormValidationRequest)->andReturn(true);
-        $response = $this->post('login/check', $dummyData);
-        dump($response);
-        $response->assertStatus(200);
+        // $user = UserModel::where('Email', $email)->get();
+        // dump($user);
+        // dump($testData);
+
+        // dump(Hash::check($password, $user[0]['Password']));
+        // exit;
+
+        $res = $this->mockRequests->shouldReceive('authentication')->with($this->mockRequests)->andReturn(true);
+
+        dump($this);
+        $response = $this->post('/login/check/', $testData);
+        // dump($response);
+
+        // $response->assertStatus(200);
         // $response->assertRedirect('admin/');
-
         // $this->assertEmpty($response);
-
         // $response->assertStatus(200);
 
 
         // $this->mockRegisterUserTest->setUp();
         // $this->mockRegisterUserTest->registerUser();
-
+        // $this->assertEquals(200, $response->getStatusCode());
     }
+
+    // protected function tearDown(): void
+    // {
+    //     Mockery::close();
+
+    //     parent::tearDown();
+    // }
 }

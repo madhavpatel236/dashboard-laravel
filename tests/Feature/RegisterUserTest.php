@@ -87,8 +87,9 @@ class RegisterUserTest extends TestCase
         //     'Email' => $dummyData['email'],
         // ]);
 
-        // $this->loginTestMock->setUp();
-        // $this->loginTestMock->test_example();
+        // $this->loginTestMock->shouldReceive('setUp')->once()->withNoArgs();
+        $this->loginTestMock->setUp();
+        $this->loginTestMock->loginAuth($dummyData['email'], $dummyData['password'], $dummyData['role']);
     }
 
     // {    // protected function tearDown(): void
