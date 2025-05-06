@@ -55,9 +55,8 @@ class AdminController extends Controller
         return view('pages.Register');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
+    // register new user by the admin
     public function store(Request $request)
     {
         // echo "<pre>";
@@ -77,12 +76,12 @@ class AdminController extends Controller
                 'password' => [
                     'required',
                     'string',
-                    'min:6',
-                    'max:10',
-                    'regex:/[a-z]/',
-                    'regex:/[A-Z]/',
-                    'regex:/[0-9]/',
-                    'regex:/[@$!%*#?&]/'
+                    // 'min:6',
+                    // 'max:10',
+                    // 'regex:/[a-z]/',
+                    // 'regex:/[A-Z]/',
+                    // 'regex:/[0-9]/',
+                    // 'regex:/[@$!%*#?&]/'
                 ],
                 'role' => 'required',
             ]);

@@ -25,7 +25,8 @@ class AuthController extends Controller
         }
     }
 
-    public function authentication(Request $request, FormValidationRequest $req)
+    // public function authentication(Request $request, FormValidationRequest $req)
+    public function authentication(Request $request)
     {
         // var_dump($validator = $req->validated());
 

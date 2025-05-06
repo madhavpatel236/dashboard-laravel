@@ -14,7 +14,8 @@ Route::get('/login', function () {
     return view('pages.Login');
 })->name('loginPage_route')->middleware(authMiddleware::class);
 
-Route::post('/login/check', [AuthController::class, 'authentication'])->name('loginAuth')->middleware(authMiddleware::class);
+// Route::post('/login/check', [AuthController::class, 'authentication'])->name('loginAuth')->middleware(authMiddleware::class);
+Route::post('/login/check', [AuthController::class, 'authentication'])->name('loginAuth');
 // Route::get('/adminHome', [AdminController::class, 'index'])->name('adminHome_route');
 // Route::post('/userHome', [UserController::class, 'show'])->name('userHome_route');
 

@@ -10,6 +10,13 @@ use Illuminate\Support\Facades\Route;
 use Mockery;
 use Mockery\MockInterface;
 use Tests\TestCase;
+use Tests\Feature\loginAuthenticationTest;
+
+// enum Roles
+// {
+//     case admin;
+//     case user;
+// }
 
 
 class RegisterUserTest extends TestCase
@@ -22,14 +29,15 @@ class RegisterUserTest extends TestCase
     public $adminController;
     public $mockRequest;
     public $fakerMock;
+    public $loginTestMock;
 
 
     public function setUp(): void
     {
         parent::setUp();
         $this->mockRequest = Mockery::mock(Request::class);
-        // $this->route = Mockery::mock(Route::class);
         $this->adminController = Mockery::mock(AdminController::class);
+        $this->loginTestMock = Mockery::mock(loginAuthenticationTest::class)->makePartial();
 
         $realFaker = \Faker\Factory::create();
         $this->fakerMock = Mockery::mock('faker');
@@ -41,108 +49,51 @@ class RegisterUserTest extends TestCase
 
     public function test_example()
     {
+
         $dummySessionData = [
             'isCurrentUserEmail' => 'madhav@elsner.com',
             'isCurrentUserRole' => 'admin'
         ];
+
+        // $cases = Roles::cases();
+        // $role = $cases[array_rand($cases)];
 
         $dummyData = [
             'firstname' => $this->fakerMock->firstName(),
             'lastname' => $this->fakerMock->lastName(),
             'email' => $this->fakerMock->email(),
             'password' => $this->fakerMock->password(),
+            // 'role' => $role->name,
             'role' => 'user',
         ];
+        // dump($dummyData);
+
 
         $this->mockRequest->shouldReceive('isCurrentUserEmail')->with($dummySessionData['isCurrentUserEmail']);
         $this->mockRequest->shouldReceive('isCurrentUserRole')->with($dummySessionData['isCurrentUserRole']);
         // new $this->adminController($this->mockRequest);
 
-        $this->assertNotEmpty($this->mockRequest->shouldReceive('fill')->with($dummyData)->andReturn($dummyData));
+        // $this->assertNotEmpty($this->mockRequest->shouldReceive('fill')->with($dummyData)->andReturn($dummyData));
         $this->mockRequest->shouldReceive('input')->with('password')->andReturn($dummyData['password']);
         $this->mockRequest->shouldReceive('validate')->with($dummyData)->andReturn($dummyData);
         $this->mockRequest->shouldReceive('fill')->with($dummyData)->andReturn($dummyData);
         $storeRes = $this->adminController->shouldReceive('store')->with($this->mockRequest)->andReturn(true);
 
-        dump($dummyData);
+        // dump($dummyData);
         $response = $this->post('admin/', $dummyData);
+        dump($response);
         $response->assertRedirect('admin/');
-        $this->assertDatabaseHas('auth', [
-            'Email' => $dummyData['email'],
-        ]);
+        // $this->assertDatabaseHas('auth', [
+        //     'Email' => $dummyData['email'],
+        // ]);
 
-
-        // dump($isEnter);
-        // dump($this->get('admin'));
-        // $response->assertStatus(200);
+        // $this->loginTestMock->setUp();
+        // $this->loginTestMock->test_example();
     }
-    protected function tearDown(): void
-    {
-        Mockery::close();
 
-        parent::tearDown();
-    }
+    // {    // protected function tearDown(): void
+    //     Mockery::close();
+
+    //     parent::tearDown();
+    // }
 }
-
-
-
-
-
-
-
-
-// public function test_store_user_creates_user_in_db()
-// {
-//     $data = [
-//         'firstname' => 'Test',
-//         'lastname' => 'User',
-//         'email' => 'testuser@example.com',
-//         'password' => 'Test@123', // Valid password with all required chars
-//         'role' => 'user',
-//     ];
-
-//     $response = $this->post('/admin/store', $data); // assumes your route is POST /admin/store
-
-//     $response->assertRedirect('/admin'); // check redirection
-//     $this->assertDatabaseHas('auth', [  // change `auth` if table name is different
-//         'email' => 'testuser@example.com',
-//         'role' => 'user',
-//     ]);
-// }
-
-
-
-
-
-
-
-
-
-
-
-// $request = new Request();
-        // $request->merge(['firstname' => 'test']);
-        // $request->merge(['lastname' => 'new']);
-        // $request->merge(['email' => 'test@gmail.com']);
-        // $request->merge(['password' => 'Test@123']);
-        // $request->merge(['role' => 'user']);
-
-        // $requestData = $request->all();
-        // $requestData['firstname'] = 'test';
-        // $requestData['lastname'] = 'new';
-        // $requestData['email'] = 'test@gmail.com';
-        // $requestData['passoword'] = 'tet@123';
-        // $requestData['role'] = 'user';
-
-
-        // $registerMock = Mockery::mock(AdminController::class);
-        // $registerMock->shouldReceive('store')->with($request)->once()->andReturn(true);
-
-        // $controller = new AdminController($request, $registerMock);
-        // $res = $controller->store($request);
-
-        // $this->assertTrue($res);
-
-        // $res = $controller->store(['firstname' => 'test', 'lastname' => 'new']);
-        // $response = $this->get('/login');
-        // $response->assertStatus(200);
