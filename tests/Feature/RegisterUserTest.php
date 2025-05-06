@@ -64,10 +64,9 @@ class RegisterUserTest extends TestCase
         $this->mockRequest->shouldReceive('fill')->with($dummyData)->andReturn($dummyData);
         $storeRes = $this->adminController->shouldReceive('store')->with($this->mockRequest)->andReturn(true);
 
+        dump($dummyData);
         $response = $this->post('admin/', $dummyData);
         $response->assertRedirect('admin/');
-
-        dump($dummyData);
         $this->assertDatabaseHas('auth', [
             'Email' => $dummyData['email'],
         ]);

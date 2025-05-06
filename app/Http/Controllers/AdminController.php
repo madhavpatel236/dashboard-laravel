@@ -22,7 +22,6 @@ class AdminController extends Controller
         $this->isCurrentUserRole = $request->session()->get('currentUserRole');
     }
 
-
     /**
      * Display a listing of the resource.
      */
@@ -89,7 +88,6 @@ class AdminController extends Controller
             ]);
         } catch (ValidationException $e) {
             return back()->withErrors($e)->withInput();
-            
         }
 
         $userModel = new UserModel();
@@ -104,45 +102,6 @@ class AdminController extends Controller
         return redirect('/admin');
     }
 
-    // ------------
-
-    // {
-    //     try {
-    //         $validated = $request->validate([
-    //             'firstname' => 'required',
-    //             'lastname' => 'required',
-    //             'email' => 'required|unique:users,email', // Use correct table name
-    //             'password' => [
-    //                 'required',
-    //                 'string',
-    //                 'min:6',
-    //                 'max:10',
-    //                 'regex:/[a-z]/',
-    //                 'regex:/[A-Z]/',
-    //                 'regex:/[0-9]/',
-    //                 'regex:/[@$!%*#?&]/'
-    //             ],
-    //             'role' => 'required',
-    //         ]);
-
-    //         $userModel = new UserModel();
-    //         $userModel->fill([
-    //             'firstname' => $validated['firstname'],
-    //             'lastname' => $validated['lastname'],
-    //             'email' => $validated['email'],
-    //             'password' => Hash::make($validated['password'], ['rounds' => 12]),
-    //             'role' => $validated['role'],
-    //         ]);
-    //         $userModel->save();
-
-    //         return redirect('/admin');
-    //     } catch (ValidationException $e) {
-    //         return back()->withErrors($e)->withInput();
-    //     }
-    // }
-
-    // ---------
-
 
     /**
      * Display the specified resource.
@@ -156,7 +115,6 @@ class AdminController extends Controller
         // $data = UserModel::findOrFail($email);
         // $res = UserModel::findOrFail($email);
     }
-
 
 
     public function edit(string $id)
@@ -174,6 +132,8 @@ class AdminController extends Controller
 
     public function update(Request $request, string $id)
     {
+
+        // dump($request); exit;
         $request->validate([
             'firstname' => 'required',
             'lastname' => 'required',
