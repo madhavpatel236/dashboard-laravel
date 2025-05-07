@@ -4,28 +4,27 @@ namespace Tests\Feature;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Requests\FormValidationRequest;
-use Illuminate\Foundation\Testing\Concerns\InteractsWithDatabase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Testing\Concerns\TestDatabases;
 use Mockery;
 use Tests\TestCase;
 
 use function PHPUnit\Framework\isNan;
 
-enum Roles
-{
-    case admin;
-    case user;
-}
+// enum Roles
+// {
+//     case admin;
+//     case user;
+// }
 
 
 class loginAuthenticationTest extends TestCase
 {
     use WithFaker;
+    // use RefreshDatabase;
 
 
     public $mockRequests;
@@ -49,16 +48,18 @@ class loginAuthenticationTest extends TestCase
 
     public function loginAuth($email, $password, $role)
     {
+        // $cases = Roles::cases();
+        // $role = $cases[array_rand($cases)];
 
 
-        // dump($email, $password); exit;
-        dump($this->assertDatabaseHas('auth', [
-            'Email' => $email,
-        ]));
-        exit;
+        // dump($this->assertDatabaseHas('auth', [
+        //     'Email' => $email,
+        //     // 'role' => $role,
+        // ]));
+        // exit;
 
-        $cases = Roles::cases();
-        $role = $cases[array_rand($cases)];
+        // dump($this->getConnection());
+        // exit;
 
         $testData = [
             'email' => $email,
@@ -83,25 +84,14 @@ class loginAuthenticationTest extends TestCase
         $this->mockRequests->shouldReceive('userModelObj')->with()->andReturnSelf();
         // dump($testData);
 
-        // $user = UserModel::where('Email', $email)->get();
-        // dump($user);exit;
-        // dump($testData);
-
 
         $res = $this->mockRequests->shouldReceive('authentication')->with($this->mockRequests)->andReturn(true);
         $response = $this->post('/login/check/', $testData);
-        dump($response);
+        // dump($response);exit;
         // $response->assertStatus(200);
-        // $response->assertRedirect('admin/');
-        // $this->assertEmpty($response);
+        // $response->assertFound();
+        $response->assertRedirect('/admin');
     }
-
-
-
-
-
-
-
 
     // protected function tearDown(): void
     // {

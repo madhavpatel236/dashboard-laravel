@@ -31,24 +31,23 @@ class AuthController extends Controller
         // var_dump($validator = $req->validated());
 
         // var_dump($validator->message()->first());
+
         // $request->validate([
         //     'email' => 'required',
         //     'password' => 'required'
         // ]);
-        // $request->session->put('credential_error', null);
+
 
         $email = $request->only('email');
         $userModelObj = new UserModel();
         $user = $userModelObj->where('Email', $email)->get();
         // dump($user); exit;
+
+
         // $user = UserModel::where('Email', $email)->get();
 
-        // echo "<pre>";var_dump(count($user)); exit;
         if (count($user) != 0 && Hash::check($request->input('password'), $user[0]['Password'])) {
-            // var_dump('correct'); exit;
             if (isset($user) && $user[0]['Role'] == 'admin') {
-                // session(['currentUserEmail' => $email['email']]);
-                // session(['currentUserRole' => $user[0]['Role']]);
                 $request->session()->put('currentUserEmail',  $email['email']);
                 $request->session()->put('currentUserRole',  $user[0]['Role']);
                 // $request->session->put('credential_error', null);
@@ -62,8 +61,8 @@ class AuthController extends Controller
                 session(['credential_error' => null]);
                 $request->session()->put('userId', $user[0]->id);
 
-                // return redirect()->route('userHome.show', $user[0]->id);
-                // return redirect()->route('userHome.show', $email);
+                return redirect()->route('userHome.show', $user[0]->id);
+                return redirect()->route('userHome.show', $email);
             }
         } else {
             $cred_error = 'Invalid Credential!!';

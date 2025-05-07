@@ -3,22 +3,21 @@
 namespace Tests\Feature;
 
 use App\Http\Controllers\AdminController;
+use Dom\Mysql;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Testing\Concerns\TestDatabases;
-use Illuminate\Validation\Rules\DatabaseRule;
 use Mockery;
 use Mockery\MockInterface;
 use Tests\TestCase;
 use Tests\Feature\loginAuthenticationTest;
 
-// enum Roles
-// {
-//     case admin;
-//     case user;
-// }
+enum Roles
+{
+    case admin;
+    case user;
+}
 
 
 class RegisterUserTest extends TestCase
@@ -37,6 +36,7 @@ class RegisterUserTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        // $this->artisan('migrate');
         $this->mockRequest = Mockery::mock(Request::class);
         $this->adminController = Mockery::mock(AdminController::class);
         $this->loginTestMock = Mockery::mock(loginAuthenticationTest::class)->makePartial();
@@ -52,23 +52,27 @@ class RegisterUserTest extends TestCase
     public function test_example()
     {
 
-        $dummySessionData = [
-            'isCurrentUserEmail' => 'madhav@elsner.com',
-            'isCurrentUserRole' => 'admin'
-        ];
 
-        // $cases = Roles::cases();
-        // $role = $cases[array_rand($cases)];
+        $cases = Roles::cases();
+        $role = $cases[array_rand($cases)];
 
         $dummyData = [
             'firstname' => $this->fakerMock->firstName(),
             'lastname' => $this->fakerMock->lastName(),
             'email' => $this->fakerMock->email(),
             'password' => $this->fakerMock->password(),
-            // 'role' => $role->name,
-            'role' => 'user',
+            'role' => $role->name,
+            // 'role' => 'user',
         ];
+
         // dump($dummyData);
+
+        $dummySessionData = [
+            // 'isCurrentUserEmail' => 'madhav@elsner.com',
+            // 'isCurrentUserRole' =>    'admin'
+            'isCurrentUserEmail' => $dummyData['email'],
+            'isCurrentUserRole' => $dummyData['role']
+        ];
 
 
         $this->mockRequest->shouldReceive('isCurrentUserEmail')->with($dummySessionData['isCurrentUserEmail']);
@@ -81,15 +85,26 @@ class RegisterUserTest extends TestCase
         // $this->mockRequest->shouldReceive('fill')->with($dummyData)->andReturn($dummyData);
         $storeRes = $this->adminController->shouldReceive('store')->with($this->mockRequest)->andReturn(true);
 
-        // dump($dummyData);
-        $response = $this->post('admin/', $dummyData);
-        dump($response);
-        $response->assertRedirect('admin/');
-        // dump($this->assertDatabaseHas('auth', [
-        //     'Email' => $dummyData['email'],
-        //     // 'password' => $dummyData['password'],
-        // ])); exit;
         // dump($dummyData['email']);
+        $response = $this->post('admin/', $dummyData);
+        $response->assertRedirect('admin');
+
+
+        dump($this->assertDatabaseHas(
+            'auth',
+            [
+                'Email' => $dummyData['email'],
+                // 'Password' => $dummyData['password'],
+            ],
+            // 'mysql'
+        )); exit;
+
+        // dump($this->getConnection());
+        //         exit;
+
+        // dump($this->assertDatabaseHas('auth'));
+        // exit;
+
         $setup = $this->loginTestMock->setUp();
         $this->loginTestMock->loginAuth($dummyData['email'], $dummyData['password'], $dummyData['role']);
     }
