@@ -7,6 +7,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Testing\Concerns\TestDatabases;
+use Illuminate\Validation\Rules\DatabaseRule;
 use Mockery;
 use Mockery\MockInterface;
 use Tests\TestCase;
@@ -76,25 +78,19 @@ class RegisterUserTest extends TestCase
         // $this->assertNotEmpty($this->mockRequest->shouldReceive('fill')->with($dummyData)->andReturn($dummyData));
         $this->mockRequest->shouldReceive('input')->with('password')->andReturn($dummyData['password']);
         $this->mockRequest->shouldReceive('validate')->with($dummyData)->andReturn($dummyData);
-        $this->mockRequest->shouldReceive('fill')->with($dummyData)->andReturn($dummyData);
+        // $this->mockRequest->shouldReceive('fill')->with($dummyData)->andReturn($dummyData);
         $storeRes = $this->adminController->shouldReceive('store')->with($this->mockRequest)->andReturn(true);
 
         // dump($dummyData);
         $response = $this->post('admin/', $dummyData);
         dump($response);
         $response->assertRedirect('admin/');
-        // $this->assertDatabaseHas('auth', [
+        // dump($this->assertDatabaseHas('auth', [
         //     'Email' => $dummyData['email'],
-        // ]);
-
-        // $this->loginTestMock->shouldReceive('setUp')->once()->withNoArgs();
-        $this->loginTestMock->setUp();
+        //     // 'password' => $dummyData['password'],
+        // ])); exit;
+        // dump($dummyData['email']);
+        $setup = $this->loginTestMock->setUp();
         $this->loginTestMock->loginAuth($dummyData['email'], $dummyData['password'], $dummyData['role']);
     }
-
-    // {    // protected function tearDown(): void
-    //     Mockery::close();
-
-    //     parent::tearDown();
-    // }
 }

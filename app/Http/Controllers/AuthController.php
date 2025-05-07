@@ -25,8 +25,8 @@ class AuthController extends Controller
         }
     }
 
-    // public function authentication(Request $request, FormValidationRequest $req)
-    public function authentication(Request $request)
+    public function authentication(Request $request, FormValidationRequest $req)
+    // public function authentication(Request $request)
     {
         // var_dump($validator = $req->validated());
 
@@ -38,7 +38,10 @@ class AuthController extends Controller
         // $request->session->put('credential_error', null);
 
         $email = $request->only('email');
-        $user = UserModel::where('Email', $email)->get();
+        $userModelObj = new UserModel();
+        $user = $userModelObj->where('Email', $email)->get();
+        // dump($user); exit;
+        // $user = UserModel::where('Email', $email)->get();
 
         // echo "<pre>";var_dump(count($user)); exit;
         if (count($user) != 0 && Hash::check($request->input('password'), $user[0]['Password'])) {
