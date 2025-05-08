@@ -29,12 +29,13 @@ class AdminControllerTest extends TestCase
     public function test_example(): void
     {
         // $this->loginStatusCheckTest();
+        $this->loginUserStatusCheckTest();
         // $this->createUserTest();
         // $this->AdminIndexTest();
         // $this->editUserTest();
         // $this->updateUserTest();
         // $this->deleteUserTest();
-        $this->userHomeTest();
+        // $this->userHomeTest();
     }
 
     public function loginStatusCheckTest()
@@ -47,8 +48,19 @@ class AdminControllerTest extends TestCase
         $this->requestObj->merge($data);
         $authControllerObj = new AuthController($this->requestObj);
         $request = $authControllerObj->authentication($this->requestObj);
+        // dump(session('credenetial_error')); exit;
         // dump($request);
         // exit;
+        $this->assertEmpty(session('credenetial_error'));
+        // $this->assertTrue($authControllerObj->authentication($this->requestObj));
+
+        // $request->assertRedirect('/admin');
+
+        // $res = $this->post('/login/check', $data );
+        // $res->assertRedirect('/admin');
+        //$response->assertViewHas(...)
+
+
 
         // $request->assertOk();
         // $this->assertEquals( 'sdc' ,$request );
@@ -71,6 +83,10 @@ class AdminControllerTest extends TestCase
         $request = $authControllerObj->authentication($this->requestObj);
         // dump($request);
         // exit;
+        $this->assertEmpty(session('credenetial_error'));
+
+        // $this->assertEmpty($request->exception);
+
 
         // $request->assertOk();
         // $this->assertEquals( 'sdc' ,$request );
@@ -89,13 +105,19 @@ class AdminControllerTest extends TestCase
         $data = [
             'firstname' => 'Testnew',
             'lastname' => 'Testnew',
-            'email' => 'Test2222@gmail.com',
+            'email' => 'Test72@gmail.com',
             'password' => 'Test@123',
             'role' => 'user'
         ];
         $this->requestObj->merge($data);
         $adminControllerObj = new AdminController($this->requestObj);
         $request = $adminControllerObj->store($this->requestObj);
+
+        dump($request);
+        $this->assertEmpty($request->exception);
+
+        // $this->assertEquals($request);
+
 
         // $this->assertTrue($request);
     }
@@ -107,7 +129,8 @@ class AdminControllerTest extends TestCase
 
         $adminControllerObj = new AdminController($this->requestObj);
         $request = $adminControllerObj->index();
-        dump($request);
+        // dump($request->exception);
+        $this->assertEmpty($request->exception);
     }
 
 
@@ -118,7 +141,8 @@ class AdminControllerTest extends TestCase
         $request = $adminControllerObj->edit(3);
         // $this->assertNotEmpty($request);
         // $this->assertEquals(60, $request);
-        dump($request);
+        // dump($request);
+        $this->assertEmpty($request->exception);
     }
 
     public function updateUserTest()
@@ -137,6 +161,7 @@ class AdminControllerTest extends TestCase
         // $this->assertNotEmpty($request);
         // $this->assertEquals(60, $request);
         dump($request);
+        $this->assertEmpty($request->exception);
     }
 
     public function deleteUserTest()
@@ -144,10 +169,11 @@ class AdminControllerTest extends TestCase
         $this->loginStatusCheckTest();
 
         $adminControllerObj = new AdminController($this->requestObj);
-        $request = $adminControllerObj->destroy(12);
+        $request = $adminControllerObj->destroy(15);
         // $this->assertNotEmpty($request);
         // $this->assertEquals(60, $request);
         dump($request);
+        $this->assertEmpty($request->exception);
     }
 
     public function userHomeTest()
@@ -158,5 +184,6 @@ class AdminControllerTest extends TestCase
         // $this->assertNotEmpty($request);
         // $this->assertEquals(60, $request);
         dump($request);
+        $this->assertEmpty($request->exception);
     }
 }

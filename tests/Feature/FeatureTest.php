@@ -32,21 +32,21 @@ class FeatureTest extends TestCase
     {
         $response = $this->get('/login');
         $response->assertStatus(200);
-        // $this->login_user_role_is_user_test();
-        // $this->login_user_role_is_admin_test();
+        // $this->login_user_is_user_test();
+        // $this->login_user_is_admin_test();
         // $this->admin_home();
         // $this->user_home();
         // $this->create_new_user_get_page();
-        // $this->create_new_user();
+        $this->create_new_user();
         // $this->edit_user_data_get_page();
         // $this->user_delete();
         // $this->edit_user_data_update();
     }
 
-    public function login_user_role_is_user_test()
+    public function login_user_is_user_test()
     {
         $data = [
-            'email' => 'madhav@elsner.com',
+            'email' => 'test@gmail.com',
             'password' => 'Test@123'
         ];
         // $response = $this->withSession(['currentUserEmail' => 'madhav@elsner.com' , 'currentUserRole' => 'admin' ])->post('/login/check');
@@ -54,13 +54,13 @@ class FeatureTest extends TestCase
         $response = $this->post('/login/check', $data);
         // $response->dumpSession();
         dump($response);
-        $response->assertRedirect('userHome/4');
+        $response->assertRedirect('userHome/3');
     }
 
-    public function login_user_role_is_admin_test()
+    public function login_user_is_admin_test()
     {
         $data = [
-            'email' => 'madhav@elsner.com',
+            'email' => 'admin@elsner.com',
             'password' => 'Test@123'
         ];
         // $response = $this->withSession(['currentUserEmail' => 'madhav@elsner.com' , 'currentUserRole' => 'admin' ])->post('/login/check');
@@ -96,9 +96,9 @@ class FeatureTest extends TestCase
     public function create_new_user()
     {
         $data = [
-            'firstname' => 'Testnew',
-            'lastname' => 'Testnew',
-            'email' => 'Testnew@gmail.com',
+            'firstname' => 'new',
+            'lastname' => 'new',
+            'email' => 'new@gmail.com',
             'password' => 'Test@123',
             'role' => 'user'
 
