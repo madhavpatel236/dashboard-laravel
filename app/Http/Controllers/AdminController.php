@@ -17,7 +17,7 @@ class AdminController extends Controller
 
     public function __construct(Request $request)
     {
-        dump($request->session()->get('currentUserEmail'));
+        // dump($request->session()->get('currentUserEmail'));
         $this->isCurrentUserEmail = $request->session()->get('currentUserEmail');
         $this->isCurrentUserRole = $request->session()->get('currentUserRole');
     }
