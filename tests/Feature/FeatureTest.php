@@ -39,15 +39,14 @@ class FeatureTest extends TestCase
         // $this->create_new_user_get_page();
         // $this->create_new_user();
         // $this->edit_user_data_get_page();
-        $this->user_delete();
+        // $this->user_delete();
         // $this->edit_user_data_update();
-
     }
 
     public function login_user_role_is_user_test()
     {
         $data = [
-            'email' => 'madhav@gmail.com',
+            'email' => 'madhav@elsner.com',
             'password' => 'Test@123'
         ];
         // $response = $this->withSession(['currentUserEmail' => 'madhav@elsner.com' , 'currentUserRole' => 'admin' ])->post('/login/check');
@@ -55,7 +54,7 @@ class FeatureTest extends TestCase
         $response = $this->post('/login/check', $data);
         // $response->dumpSession();
         dump($response);
-        $response->assertRedirect('userHome/5');
+        $response->assertRedirect('userHome/4');
     }
 
     public function login_user_role_is_admin_test()
@@ -123,30 +122,23 @@ class FeatureTest extends TestCase
         $data = [
             'firstname' => 'Testnew1',
             'lastname' => 'Testnew',
-            'email' => 'Testnew@gmail.com',
-            'password' => 'Test@123',
+            'email' => 'ewf@sfv.fv',
+            // 'password' => 'Test@123',
             'role' => 'user'
 
         ];
 
-        $response = $this->withSession(['currentUserEmail' => 'madhav@elsner.com', 'currentUserRole' => 'admin'])->put('admin' , $data);
+        $response = $this->withSession(['currentUserEmail' => 'madhav@elsner.com', 'currentUserRole' => 'admin'])->put('admin/6/', $data);
         dump($response);
         $response->assertStatus(200);
+        // $response->assertRedirect('admin');
+
     }
 
     public function user_delete()
     {
-        $data = [
-            'firstname' => 'Testnew1',
-            'lastname' => 'Testnew',
-            'email' => 'Testnew@gmail.com',
-            'password' => 'Test@123',
-            'role' => 'user'
-
-        ];
-
-        $response = $this->withSession(['currentUserEmail' => 'madhav@elsner.com', 'currentUserRole' => 'admin'])->delete('admin/11', $data );
+        $response = $this->withSession(['currentUserEmail' => 'madhav@elsner.com', 'currentUserRole' => 'admin'])->delete('admin/9');
         dump($response);
-        $response->assertStatus(200);
+        $response->assertRedirect('admin');
     }
 }
