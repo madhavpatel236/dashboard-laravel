@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\Request ;
+use Illuminate\Http\Request;
 use App\Models\UserModel as UserModel;
 use Dotenv\Exception\ValidationException;
 use Illuminate\Support\Facades\Hash;
@@ -18,8 +18,12 @@ class AdminController extends Controller
     public function __construct(Request $request)
     {
         // dump($request->session()->get('currentUserEmail'));
-        $this->isCurrentUserEmail = $request->session()->get('currentUserEmail');
-        $this->isCurrentUserRole = $request->session()->get('currentUserRole');
+        // if (isset($request)) {
+        $this->isCurrentUserEmail = session('currentUserEmail');
+        $this->isCurrentUserRole = session('currentUserRole');
+        // $this->isCurrentUserEmail = $request->session()->get('currentUserEmail');
+        // $this->isCurrentUserRole = $request->session()->get('currentUserRole');
+        // }
     }
 
     public function index()

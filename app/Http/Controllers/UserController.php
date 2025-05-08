@@ -13,8 +13,10 @@ class UserController extends Controller
 
     public function __construct(Request $request)
     {
-        $this->isCurrentUserEmail = $request->session()->get('currentUserEmail');
-        $this->isCurrentUserRole = $request->session()->get('currentUserRole');
+        $this->isCurrentUserEmail =  session('currentUserEmail');
+        $this->isCurrentUserRole = session('currentUserRole');
+        // $this->isCurrentUserEmail = $request->session()->get('currentUserEmail');
+        // $this->isCurrentUserRole = $request->session()->get('currentUserRole');
         // if (is_null($this->isCurrentUserEmail) && is_null($this->isCurrentUserRole)) {
         //     var_dump('dfv');
         //     return redirect('/login');
