@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Http\Request ;
 use App\Models\UserModel as UserModel;
 use Dotenv\Exception\ValidationException;
 use Illuminate\Support\Facades\Hash;
@@ -17,14 +17,11 @@ class AdminController extends Controller
 
     public function __construct(Request $request)
     {
-        // dump($request->session()->get('currentUserEmail));
+        dump($request->session()->get('currentUserEmail'));
         $this->isCurrentUserEmail = $request->session()->get('currentUserEmail');
         $this->isCurrentUserRole = $request->session()->get('currentUserRole');
     }
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         if (is_null($this->isCurrentUserEmail) && is_null($this->isCurrentUserRole)) {
@@ -43,9 +40,6 @@ class AdminController extends Controller
         return view('pages.AdminHome', compact('users'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         if (is_null($this->isCurrentUserEmail) && is_null($this->isCurrentUserRole)) {
@@ -60,7 +54,7 @@ class AdminController extends Controller
     public function store(Request $request)
     {
         // echo "<pre>";
-        // print_r($request->all());
+        // print_r($request->session());
         // exit;
         // $password = $request->all()['password'];
         $password = $request->input('password');

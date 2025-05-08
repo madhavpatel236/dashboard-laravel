@@ -28,8 +28,8 @@ Route::resource('/admin', AdminController::class);
 // Route::post('/check', function (AdminController $admin) {
 //     $admin->check();
 // });
-Route::post('/check', 'AdminController@check');
-Route::get('/check', [AdminController::class, 'check']);
+// Route::post('/check', 'AdminController@check');
+// Route::get('/check', [AdminController::class, 'check']);
 
 // Route::post('/delete_user' )->name('delete_user_route');
 
