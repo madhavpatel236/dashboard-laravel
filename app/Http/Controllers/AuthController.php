@@ -58,15 +58,16 @@ class AuthController extends Controller
 
             return redirect()->route('admin.index');
         } elseif (isset($user) && $user[0]['Role'] == 'user') {
+
             session(['currentUserEmail' => $email['email']]);
             session(['currentUserRole' => $user[0]['Role']]);
-
 
             // $request->session()->put('currentUserEmail',  $email['email']);
             // $request->session()->put('currentUserRole',  $user[0]['Role']);
             // $request->session->put('credential_error', null);
             session(['credential_error' => null]);
-            $request->session()->put('userId', $user[0]->id);
+            // $request->session()->put('userId', $user[0]->id);
+            session(['userId' => $user[0]->id]);
 
             return redirect()->route('userHome.show', $user[0]->id);
             return redirect()->route('userHome.show', $email);
