@@ -21,29 +21,25 @@ class FeatureTest extends TestCase
         parent::setUp();
 
         $this->requestObj = new Request();
-        // $this->requestObj->session()->put('currentUserEmail',  'madhav@elsner.com');
-        // $this->requestObj->session()->put('currentUserRole',  'admin');
-        // $this->requestObj->merge(['currentUserEmail' => 'madhav@elsner.com']);
-        // $this->authControllerObj = new AuthController($this->requestObj);
-        // $this->adminControllerObj = new AdminController($this->requestObj);
     }
 
     public function test_example(): void
     {
         $response = $this->get('/login');
         $response->assertStatus(200);
-        // $this->login_user_is_user_test();
-        // $this->login_user_is_admin_test();
+        // $this->login_user_is_user();
+        // $this->login_user_is_admin();
         // $this->admin_home();
         // $this->user_home();
         // $this->create_new_user_get_page();
-        $this->create_new_user();
+        // $this->create_new_user();
         // $this->edit_user_data_get_page();
         // $this->user_delete();
         // $this->edit_user_data_update();
+        // $this->logout_user();
     }
 
-    public function login_user_is_user_test()
+    public function login_user_is_user()
     {
         $data = [
             'email' => 'test@gmail.com',
@@ -57,7 +53,7 @@ class FeatureTest extends TestCase
         $response->assertRedirect('userHome/3');
     }
 
-    public function login_user_is_admin_test()
+    public function login_user_is_admin()
     {
         $data = [
             'email' => 'admin@elsner.com',
@@ -137,8 +133,15 @@ class FeatureTest extends TestCase
 
     public function user_delete()
     {
-        $response = $this->withSession(['currentUserEmail' => 'madhav@elsner.com', 'currentUserRole' => 'admin'])->delete('admin/9');
+        $response = $this->withSession(['currentUserEmail' => 'madhav@elsner.com', 'currentUserRole' => 'admin'])->delete('admin/13');
         dump($response);
         $response->assertRedirect('admin');
+    }
+
+    public function logout_user(){
+        $response = $this->get('/');
+        // $response->assertRedirect('/login');
+        dump($response);
+        $this->assertEmpty(session('currentUserEmail'));
     }
 }
